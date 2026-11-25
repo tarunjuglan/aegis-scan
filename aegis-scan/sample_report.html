@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AegisScan Report - 127.0.0.1</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card: #111827;
+      --border: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .header {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 24px;
+    }
+    h1 { margin: 0; font-size: 1.75rem; color: var(--accent); }
+    .meta { color: var(--muted); font-size: 0.9rem; }
+    .cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px; margin-bottom: 26px;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+    }
+    .card .label { font-size: 0.78rem; text-transform: uppercase; color: var(--muted); }
+    .card .value { font-size: 1.5rem; font-weight: 700; margin-top: 4px; }
+    table {
+      width: 100%; border-collapse: collapse; background: var(--card);
+      border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    th, td { padding: 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { background: #0f172a; font-size: 0.8rem; text-transform: uppercase; color: var(--muted); }
+    .port-pill {
+      background: #0f172a; border: 1px solid #334155; padding: 3px 8px;
+      border-radius: 6px; font-family: monospace; color: #34d399; font-weight: 600;
+    }
+    .badge {
+      display: inline-block; padding: 3px 9px; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 700;
+    }
+    .critical { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid #ef4444; }
+    .high { background: rgba(249, 115, 22, 0.18); color: #fb923c; border: 1px solid #f97316; }
+    .medium { background: rgba(234, 179, 8, 0.18); color: #facc15; border: 1px solid #eab308; }
+    .low { background: rgba(34, 197, 94, 0.18); color: #4ade80; border: 1px solid #22c55e; }
+    .info { background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid #38bdf8; }
+    .banner {
+      font-family: monospace; font-size: 0.85rem; color: #cbd5e1;
+      background: #0b1220; padding: 6px 9px; border-radius: 6px; margin-bottom: 8px;
+      word-break: break-word;
+    }
+    .insight, .fix { font-size: 0.86rem; color: #cbd5e1; margin-top: 4px; }
+    .fix { color: #a7f3d0; }
+    footer { margin-top: 24px; text-align: center; font-size: 0.8rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>AegisScan Security Audit Report</h1>
+        <div class="meta">Target: <strong>127.0.0.1</strong> (127.0.0.1) &bull; Scanned: 2026-11-25 12:43:46</div>
+      </div>
+      <div class="meta">Duration: 1.02s</div>
+    </div>
+
+    <div class="cards">
+      <div class="card"><div class="label">Ports Scanned</div><div class="value">3</div></div>
+      <div class="card"><div class="label">Open Ports</div><div class="value" style="color:#4ade80;">3</div></div>
+      <div class="card"><div class="label">Critical / High</div><div class="value" style="color:#f87171;">1</div></div>
+      <div class="card"><div class="label">Medium</div><div class="value" style="color:#facc15;">1</div></div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Port</th>
+          <th>Service</th>
+          <th>Latency</th>
+          <th>Risk</th>
+          <th>Banner / TLS &amp; Security Guidance</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+            <tr>
+              <td><span class="port-pill">51954/tcp</span></td>
+              <td><strong>SSH (Alt Port)</strong></td>
+              <td>0.62 ms</td>
+              <td><span class="badge low">LOW</span></td>
+              <td>
+                <div class="banner">SSH-2.0-OpenSSH_9.6p1 Ubuntu-DemoLab</div>
+                <div class="insight"><strong>Why it matters:</strong> Encrypted remote shell, frequently targeted by automated credential brute-force bots.</div>
+                <div class="fix"><strong>Hardening:</strong> Disable password auth (use Ed25519 keys), disable root login, and enable Fail2Ban.</div>
+              </td>
+            </tr>
+            
+
+            <tr>
+              <td><span class="port-pill">51955/tcp</span></td>
+              <td><strong>FTP (Alt Port)</strong></td>
+              <td>0.86 ms</td>
+              <td><span class="badge high">HIGH</span></td>
+              <td>
+                <div class="banner">220 DemoLab FTP Server (vsFTPd 3.0.5) ready</div>
+                <div class="insight"><strong>Why it matters:</strong> Transmits usernames and passwords in plaintext; vulnerable to sniffing and anonymous login misconfigurations.</div>
+                <div class="fix"><strong>Hardening:</strong> Disable plain FTP; migrate to SFTP (port 22) or FTPS, and disallow anonymous access.</div>
+              </td>
+            </tr>
+            
+
+            <tr>
+              <td><span class="port-pill">51956/tcp</span></td>
+              <td><strong>HTTP (Alt Port)</strong></td>
+              <td>0.51 ms</td>
+              <td><span class="badge medium">MEDIUM</span></td>
+              <td>
+                <div class="banner">HTTP/1.1 200 OK | Server: AegisLab-MockHTTP/1.0</div>
+                <div class="insight"><strong>Why it matters:</strong> Unencrypted web traffic; susceptible to MitM interception and common web app vulnerabilities.</div>
+                <div class="fix"><strong>Hardening:</strong> Redirect all HTTP traffic to HTTPS (443) and add security headers (HSTS, CSP).</div>
+              </td>
+            </tr>
+            
+      </tbody>
+    </table>
+
+    <footer>Generated by AegisScan &bull; Educational Cybersecurity Port Scanner (Authorized Testing Only)</footer>
+  </div>
+</body>
+</html>
